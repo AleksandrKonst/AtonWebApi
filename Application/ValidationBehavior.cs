@@ -3,6 +3,9 @@ using MediatR;
 
 namespace Application;
 
+/// <summary>
+/// Конфигурация поведения FluentValidation
+/// </summary>
 public class ValidationBehavior<TRequest, TResponse>
     (IEnumerable<IValidator<TRequest>> validators) : IPipelineBehavior<TRequest, TResponse>
     where TRequest : IRequest<TResponse>

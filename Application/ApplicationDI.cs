@@ -6,6 +6,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Application;
 
+/// <summary>
+/// Конфигурация сервисов Appliction слоя
+/// </summary>
 public static class ApplicationDI
 {
     public static IServiceCollection AddApplication(this IServiceCollection services, IConfiguration configuration)

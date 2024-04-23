@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace AtonWebApi.Filters;
 
+/// <summary>
+/// Единый фильтр ошибок
+/// </summary>
 public class ResponseExceptionFilter(ILogger<ResponseExceptionFilter> logger) : ExceptionFilterAttribute
 {
     private readonly ILogger<ResponseExceptionFilter> _logger = logger;

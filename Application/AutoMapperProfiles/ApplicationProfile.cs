@@ -4,6 +4,9 @@ using Domain.Entity;
 
 namespace Application.AutoMapperProfiles;
 
+/// <summary>
+/// Конфигурация маппинга
+/// </summary>
 public class ApplicationProfile : Profile
 {
     public ApplicationProfile()

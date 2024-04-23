@@ -10,6 +10,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AtonWebApi.Controllers;
 
+// <summary>
+/// Контролер пользователей
+/// </summary>
 [Authorize]
 [ApiController]
 [TypeFilter(typeof(ResponseExceptionFilter))]

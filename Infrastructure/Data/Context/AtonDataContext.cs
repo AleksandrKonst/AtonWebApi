@@ -4,6 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data.Context;
 
+/// <summary>
+/// Контекст Базы Данных
+/// </summary>
 public class AtonDataContext : DbContext
 {
     public AtonDataContext()

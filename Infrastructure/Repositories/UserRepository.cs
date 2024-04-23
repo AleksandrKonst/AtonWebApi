@@ -5,6 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories;
 
+/// <summary>
+/// Пользовательский репозиторий
+/// </summary>
 public class UserRepository(AtonDataContext context) : IUserRepository
 {
     public async Task<bool> AddAsync(User obj)

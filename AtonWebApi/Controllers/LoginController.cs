@@ -9,6 +9,9 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace AtonWebApi.Controllers;
 
+/// <summary>
+/// Контролер аутентификации
+/// </summary>
 [Route("api/[controller]")]
 [ApiController]
 [TypeFilter(typeof(ResponseExceptionFilter))]

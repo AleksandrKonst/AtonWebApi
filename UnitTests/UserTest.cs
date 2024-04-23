@@ -13,6 +13,9 @@ using Xunit;
 
 namespace UnitTests;
 
+/// <summary>
+/// Пользовательские тесты
+/// </summary>
 public class UserTest
 {
     [Fact]
