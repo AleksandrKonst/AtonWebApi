@@ -1,5 +1,4 @@
 using Application.DTO;
-using Application.Infrastructure;
 using AutoMapper;
 using Domain.Interfaces;
 using FluentValidation;
@@ -35,7 +34,10 @@ public static class GetUserByLoginAndPassword
         public async Task<QueryResult> Handle(Query request, CancellationToken cancellationToken)
         {
             var user = await repository.CheckUserPasswordAsync(request.Login, request.Password);
-            await UserInfrastructure.CheckUser(request.Login, request.UserLogin);
+            
+            var currentUser = await repository.GetAsync(request.UserLogin);
+            if (currentUser == null || currentUser.RevokedOn != null || (currentUser.Admin == false && currentUser.Login != request.Login))
+                throw new Exception("Ошибка доступа");
 
             if (user == null)
             {

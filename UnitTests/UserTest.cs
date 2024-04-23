@@ -212,6 +212,8 @@ public class UserTest
         var mockRepo = new Mock<IUserRepository>();
         mockRepo.Setup(repo => repo.CheckUserPasswordAsync("aleksandr", "1243"))
             .ReturnsAsync(UserMocks.GetAdminUser());
+        mockRepo.Setup(repo => repo.GetAsync("aleksandr"))
+            .ReturnsAsync(UserMocks.GetAdminUser());
 
         var mockMapper = new MapperConfiguration(cfg =>
         {

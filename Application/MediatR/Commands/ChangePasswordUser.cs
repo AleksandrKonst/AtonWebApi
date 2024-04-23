@@ -1,5 +1,4 @@
 using Application.DTO;
-using Application.Infrastructure;
 using Domain.Interfaces;
 using FluentValidation;
 using MediatR;
@@ -36,7 +35,9 @@ public static class ChangePasswordUser
     {
         public async Task<CommandResult> Handle(Command request, CancellationToken cancellationToken)
         {
-            await UserInfrastructure.CheckUser(request.ChangePasswordDto.Login, request.UserLogin);
+            var currentUser = await repository.GetAsync(request.UserLogin);
+            if (currentUser == null || currentUser.RevokedOn != null || (currentUser.Admin == false && currentUser.Login != request.ChangePasswordDto.Login))
+                throw new Exception("Ошибка доступа");
 
             var user = await repository.GetAsync(request.ChangePasswordDto.Login);
             if (user == null) throw new Exception("Пользователь не найден");

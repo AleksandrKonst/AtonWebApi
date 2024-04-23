@@ -1,4 +1,3 @@
-using Application.Infrastructure;
 using Domain.Interfaces;
 using FluentValidation;
 using MediatR;
@@ -31,7 +30,9 @@ public static class ChangeLoginUser
     {
         public async Task<CommandResult> Handle(Command request, CancellationToken cancellationToken)
         {
-            await UserInfrastructure.CheckUser(request.Login, request.UserLogin);
+            var currentUser = await repository.GetAsync(request.UserLogin);
+            if (currentUser == null || currentUser.RevokedOn != null || (currentUser.Admin == false && currentUser.Login != request.Login))
+                throw new Exception("Ошибка доступа");
 
             var user = await repository.GetAsync(request.Login);
             if (user == null) throw new Exception("Пользователь не найден");
