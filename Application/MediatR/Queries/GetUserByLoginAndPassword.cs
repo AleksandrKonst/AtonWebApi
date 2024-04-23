@@ -10,7 +10,7 @@ namespace Application.MediatR.Queries;
 public static class GetUserByLoginAndPassword
 {
     public record Query(string Login, string Password, string UserLogin) : IRequest<QueryResult>;
-    public record QueryResult(IEnumerable<UserByLoginDto> Result);
+    public record QueryResult(UserByLoginDto Result);
     
     public class Validator : AbstractValidator<Query>
     {
@@ -42,7 +42,7 @@ public static class GetUserByLoginAndPassword
                 throw new Exception("Неверный пароль или логин");
             }
             
-            return new QueryResult(mapper.Map<IEnumerable<UserByLoginDto>>(user));
+            return new QueryResult(mapper.Map<UserByLoginDto>(user));
         }
     }
 }

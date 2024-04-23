@@ -9,7 +9,7 @@ namespace Application.MediatR.Queries;
 public static class GetUserByLogin
 {
     public record Query(string Login) : IRequest<QueryResult>;
-    public record QueryResult(IEnumerable<UserByLoginDto> Result);
+    public record QueryResult(UserByLoginDto Result);
     
     public class Validator : AbstractValidator<Query>
     {
@@ -25,7 +25,7 @@ public static class GetUserByLogin
     {
         public async Task<QueryResult> Handle(Query request, CancellationToken cancellationToken)
         {
-            return new QueryResult(mapper.Map<IEnumerable<UserByLoginDto>>(await repository.GetAsync(request.Login)));
+            return new QueryResult(mapper.Map<UserByLoginDto>(await repository.GetAsync(request.Login)));
         }
     }
 }

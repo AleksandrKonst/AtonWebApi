@@ -8,7 +8,7 @@ namespace Application.MediatR.Commands;
 
 public static class ChangeLoginUser
 {
-    public record Command(string Login, string UserLogin) : IRequest<CommandResult>;
+    public record Command(string Login, string NewLogin, string UserLogin) : IRequest<CommandResult>;
     
     public record CommandResult(bool Result);
     
@@ -36,7 +36,7 @@ public static class ChangeLoginUser
             var user = await repository.GetAsync(request.Login);
             if (user == null) throw new Exception("Пользователь не найден");
             
-            user.Login = request.Login;
+            user.Login = request.NewLogin;
             user.ModifiedOn = DateTime.Now.ToUniversalTime();
             user.ModifiedBy = request.UserLogin;
 

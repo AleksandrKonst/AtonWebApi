@@ -86,11 +86,11 @@ public class UsersController(IMediator mediator) : ControllerBase
     [HttpPut("update/login")]
     [RequestSizeLimit(2 * 1024)]
     [Produces("application/json")]
-    public async Task<IActionResult> UpdateUserLogin(string login, CancellationToken cancellationToken)
+    public async Task<IActionResult> UpdateUserLogin(string login, string newLogin, CancellationToken cancellationToken)
     {
         dynamic response = new ExpandoObject();
     
-        var command = new ChangeLoginUser.Command(login, User.Claims.First(x => x.Type == ClaimTypes.Name).Value);
+        var command = new ChangeLoginUser.Command(login, newLogin, User.Claims.First(x => x.Type == ClaimTypes.Name).Value);
         var result = await mediator.Send(command, cancellationToken);
             
         if (result.Result)
