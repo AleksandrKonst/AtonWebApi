@@ -1,10 +1,12 @@
 ﻿FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
-WORKDIR /app
+WORKDIR /
 EXPOSE 80
-EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
+COPY ["Domain/Domain.csproj", "Domain/"]
+COPY ["Infrastructure/Infrastructure.csproj", "Infrastructure/"]
+COPY ["Application/Application.csproj", "Application/"]
 COPY ["AtonWebApi/AtonWebApi.csproj", "AtonWebApi/"]
 RUN dotnet restore "AtonWebApi/AtonWebApi.csproj"
 COPY . .

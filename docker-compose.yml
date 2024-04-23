@@ -1,0 +1,55 @@
+services:
+  aton_api:
+    container_name: aton_api
+    image: atonwebapi
+    build:
+      context: .
+      dockerfile: AtonWebApi/Dockerfile
+    ports:
+      - 7114:80
+    networks:
+      - DbData
+    depends_on:
+      - dbData
+    environment:
+      ASPNETCORE_HTTP_PORTS: 80
+      DB_ROUTE: Server=postgres;Port=5432;Database=Aton_Data;User Id=postgres;Password=1243
+  
+  dbData:
+    container_name: postgres
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1243
+      POSTGRES_DB: Aton_Data
+      PGDATA: "/var/lib/postgresql/data/pgdata"
+    volumes:
+      - ./dump/initAtonData.sql:/docker-entrypoint-initdb.d/init.sql
+      - initAton-data-db:/var/lib/postgresql/data
+    networks:
+      - DbData
+
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4:7.2
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@aton.ru
+      PGADMIN_DEFAULT_PASSWORD: admin
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    ports:
+      - "5050:80"
+    networks:
+      - DbData
+    depends_on:
+      - dbData
+
+networks:
+  DbData:
+    driver: bridge
+
+volumes:
+  initAton-data-db:
+  pgadmin-data:
