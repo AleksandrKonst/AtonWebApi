@@ -11,6 +11,8 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         entity.HasKey(e => e.Guid).HasName("user_pk");
 
         entity.ToTable("user");
+        
+        entity.HasIndex(e => e.Login, "user_un").IsUnique();
 
         entity.Property(e => e.Guid)
             .ValueGeneratedNever()
@@ -21,7 +23,6 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             .HasColumnName("admin");
         entity.Property(e => e.Birthday)
             .HasComment("Поле даты рождения может быть Null")
-            .HasColumnType("timestamp without time zone")
             .HasColumnName("birthday");
         entity.Property(e => e.CreatedBy)
             .HasComment("Логин Пользователя, от имени которого этот пользователь создан")
@@ -29,7 +30,6 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             .HasColumnName("createdby");
         entity.Property(e => e.CreatedOn)
             .HasComment("Дата создания пользователя")
-            .HasColumnType("timestamp without time zone")
             .HasColumnName("createdon");
         entity.Property(e => e.Gender)
             .HasComment("Пол 0 - женщина, 1 - мужчина, 2 - неизвестно")
@@ -44,7 +44,6 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             .HasColumnName("modifiedby");
         entity.Property(e => e.ModifiedOn)
             .HasComment("Дата изменения пользователя")
-            .HasColumnType("timestamp without time zone")
             .HasColumnName("modifiedon");
         entity.Property(e => e.Name)
             .HasComment("Имя (запрещены все символы кроме латинских и русских букв)")
@@ -60,7 +59,6 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             .HasColumnName("revokedby");
         entity.Property(e => e.RevokedOn)
             .HasComment("Дата удаления пользователя")
-            .HasColumnType("timestamp without time zone")
             .HasColumnName("revokedon");     
     }
 }

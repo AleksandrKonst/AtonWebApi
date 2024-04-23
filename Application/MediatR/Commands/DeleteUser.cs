@@ -7,7 +7,7 @@ namespace Application.MediatR.Commands;
 
 public static class DeleteUser
 {
-    public record Command(string Login, string UserLogin, bool Soft = true) : IRequest<CommandResult>;
+    public record Command(string Login, string UserLogin, bool Soft) : IRequest<CommandResult>;
     
     public record CommandResult(bool Result);
     
@@ -35,7 +35,7 @@ public static class DeleteUser
 
             if (request.Soft)
             {
-                user.RevokedOn = DateTime.Now;
+                user.RevokedOn = DateTime.Now.ToUniversalTime();
                 user.RevokedBy = request.UserLogin;
                 
                 var result = await repository.UpdateAsync(user);

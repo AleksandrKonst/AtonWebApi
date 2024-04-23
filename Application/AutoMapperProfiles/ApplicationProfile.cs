@@ -12,12 +12,12 @@ public class ApplicationProfile : Profile
             .ForMember(p => p.Guid,
                 opt => opt.MapFrom(x => Guid.NewGuid()))
             .ForMember(p => p.CreatedOn,
-                opt => opt.MapFrom(x => DateTime.Now))
+                opt => opt.MapFrom(x => DateTime.Now.ToUniversalTime()))
             .ReverseMap();
         
         CreateMap<NewUserDataDto, User>()
             .ForMember(p => p.ModifiedOn,
-            opt => opt.MapFrom(x => DateTime.Now))
+            opt => opt.MapFrom(x => DateTime.Now.ToUniversalTime()))
             .ReverseMap();
         
         CreateMap<UserDto, User>().ReverseMap();

@@ -38,7 +38,7 @@ public class UserRepository(AtonDataContext context) : IUserRepository
     }
 
     public async Task<IEnumerable<User>> GetUsersByRevokedOnAsync() =>
-        await context.Users.Where(u => u.RevokedOn != null).OrderBy(u => u.CreatedOn).AsNoTracking().ToListAsync();
+        await context.Users.Where(u => u.RevokedOn == null).OrderBy(u => u.CreatedOn).AsNoTracking().ToListAsync();
 
     public async Task<IEnumerable<User>> GetUsersByAgeAsync(int age) =>
         await context.Users.Where(u => (DateTime.Now.Date - u.Birthday!.Value).TotalDays / 365 >= age).AsNoTracking().ToListAsync();

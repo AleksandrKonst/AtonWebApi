@@ -37,7 +37,7 @@ public static class ChangeLoginUser
             if (user == null) throw new Exception("Пользователь не найден");
             
             user.Login = request.Login;
-            user.ModifiedOn = DateTime.Now;
+            user.ModifiedOn = DateTime.Now.ToUniversalTime();
             user.ModifiedBy = request.UserLogin;
 
             var result = await repository.UpdateAsync(user);

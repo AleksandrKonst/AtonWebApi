@@ -42,7 +42,7 @@ public static class ChangePasswordUser
             if (user == null) throw new Exception("Пользователь не найден");
             
             user.Password = request.ChangePasswordDto.Password;
-            user.ModifiedOn = DateTime.Now;
+            user.ModifiedOn = DateTime.Now.ToUniversalTime();
             user.ModifiedBy = request.UserLogin;
 
             var result = await repository.UpdateAsync(user);

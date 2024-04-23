@@ -45,7 +45,7 @@ public static class UpdateUserData
             user.Name = request.NewUserDataDto.Name;
             user.Gender = request.NewUserDataDto.Gender;
             user.Birthday = request.NewUserDataDto.Birthday;
-            user.ModifiedOn = DateTime.Now;
+            user.ModifiedOn = DateTime.Now.ToUniversalTime();
             user.ModifiedBy = request.UserLogin;
 
             var result = await repository.UpdateAsync(user);
