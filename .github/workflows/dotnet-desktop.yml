@@ -22,9 +22,9 @@ jobs:
       with:
         dotnet-version: 8.0.x
     - name: Install Restore
-      run: dotnet restore AtonWebApi/AtonWebApi.sln
+      run: dotnet restore AtonWebApi.sln
 
     - name: Build
-      run: dotnet build AtonWebApi/AtonWebApi.sln
+      run: dotnet build AtonWebApi.sln
     - name: Test with the dotnet CLI
-      run: dotnet test AtonWebApi/UnitTests/UnitTests.csproj
+      run: dotnet test UnitTests/UnitTests.csproj
