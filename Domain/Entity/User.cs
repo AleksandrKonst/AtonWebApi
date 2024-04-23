@@ -1,5 +1,8 @@
 ﻿namespace Domain.Entity;
 
+/// <summary>
+/// Пользователь
+/// </summary>
 public class User
 {
     /// <summary>

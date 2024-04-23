@@ -24,16 +24,6 @@ public class UserRepository(AtonDataContext context) : IUserRepository
     public async Task<User?> GetAsync(string identifier) =>
         await context.Users.AsNoTracking().FirstOrDefaultAsync(u => u.Login == identifier);
 
-    public async Task<bool> DeleteAsync(string identifier)
-    {
-        var user = await context.Users.Where(u => u.Login == identifier).FirstOrDefaultAsync();
-        if (user == null) return false;
-        
-        context.Users.Remove(user);
-        await context.SaveChangesAsync();
-        return true;
-    }
-
     public async Task<bool> DeleteAsync(User obj)
     {
         context.Users.Remove(obj);

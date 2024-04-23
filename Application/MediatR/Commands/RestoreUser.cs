@@ -18,6 +18,10 @@ public static class RestoreUser
             RuleFor(x => x.Login)
                 .Matches("^[a-zA-Z0-9]*$")
                 .WithMessage("Неверный формат логина");
+            
+            RuleFor(x => x.UserLogin)
+                .Matches("^[a-zA-Z0-9]*$")
+                .WithMessage("Неверный формат логина пользователя");
         }
     }
     

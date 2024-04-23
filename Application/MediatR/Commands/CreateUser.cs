@@ -34,6 +34,10 @@ public static class CreateUser
                 .GreaterThanOrEqualTo(0)
                 .LessThan(3)
                 .WithMessage("Неверный формат имени");
+            
+            RuleFor(x => x.UserLogin)
+                .Matches("^[a-zA-Z0-9]*$")
+                .WithMessage("Неверный формат логина пользователя");
         }
     }
     

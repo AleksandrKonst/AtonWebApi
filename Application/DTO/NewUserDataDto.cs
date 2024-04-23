@@ -1,6 +1,6 @@
 namespace Application.DTO;
 
-public class UserDataDto
+public class NewUserDataDto
 {
     public string Login { get; set; }
     

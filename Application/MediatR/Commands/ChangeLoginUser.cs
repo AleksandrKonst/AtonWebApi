@@ -1,4 +1,4 @@
-using AutoMapper;
+using Application.Infrastructure;
 using Domain.Interfaces;
 using FluentValidation;
 using MediatR;
@@ -20,21 +20,20 @@ public static class ChangeLoginUser
                 .Matches("^[a-zA-Z0-9]*$")
                 .WithMessage("Неверный формат логина");
             
+            RuleFor(x => x.UserLogin)
+                .Matches("^[a-zA-Z0-9]*$")
+                .WithMessage("Неверный формат логина пользователя");
         }
     }
 
-    public class Handler
-        (IUserRepository repository, IMapper mapper, ILogger<Handler> logger) : IRequestHandler<Command, CommandResult>
+    public class Handler(IUserRepository repository, ILogger<Handler> logger) 
+        : IRequestHandler<Command, CommandResult>
     {
         public async Task<CommandResult> Handle(Command request, CancellationToken cancellationToken)
         {
-            var currentUser = await repository.GetAsync(request.UserLogin);
-            if (currentUser == null ||
-                (currentUser.Admin == false && currentUser.Login != request.Login))
-                throw new Exception("Ошибка доступа");
+            await UserInfrastructure.CheckUser(request.Login, request.UserLogin);
 
             var user = await repository.GetAsync(request.Login);
-
             if (user == null) throw new Exception("Пользователь не найден");
             
             user.Login = request.Login;

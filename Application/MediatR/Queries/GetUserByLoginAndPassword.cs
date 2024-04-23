@@ -1,4 +1,5 @@
 using Application.DTO;
+using Application.Infrastructure;
 using AutoMapper;
 using Domain.Interfaces;
 using FluentValidation;
@@ -8,7 +9,7 @@ namespace Application.MediatR.Queries;
 
 public static class GetUserByLoginAndPassword
 {
-    public record Query(string Login, string Password) : IRequest<QueryResult>;
+    public record Query(string Login, string Password, string UserLogin) : IRequest<QueryResult>;
     public record QueryResult(IEnumerable<UserByLoginDto> Result);
     
     public class Validator : AbstractValidator<Query>
@@ -22,6 +23,10 @@ public static class GetUserByLoginAndPassword
             RuleFor(x => x.Password)
                 .Matches("^[a-zA-Z0-9]*$")
                 .WithMessage("Неверный формат пароля");
+            
+            RuleFor(x => x.UserLogin)
+                .Matches("^[a-zA-Z0-9]*$")
+                .WithMessage("Неверный формат логина пользователя");
         }
     }
     
@@ -30,6 +35,7 @@ public static class GetUserByLoginAndPassword
         public async Task<QueryResult> Handle(Query request, CancellationToken cancellationToken)
         {
             var user = await repository.CheckUserPasswordAsync(request.Login, request.Password);
+            await UserInfrastructure.CheckUser(request.Login, request.UserLogin);
 
             if (user == null)
             {

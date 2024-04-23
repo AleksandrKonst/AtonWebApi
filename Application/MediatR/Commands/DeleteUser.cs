@@ -1,4 +1,3 @@
-using AutoMapper;
 using Domain.Interfaces;
 using FluentValidation;
 using MediatR;
@@ -8,7 +7,7 @@ namespace Application.MediatR.Commands;
 
 public static class DeleteUser
 {
-    public record Command(string Login, string UserLogin, bool Soft) : IRequest<CommandResult>;
+    public record Command(string Login, string UserLogin, bool Soft = true) : IRequest<CommandResult>;
     
     public record CommandResult(bool Result);
     
@@ -19,10 +18,14 @@ public static class DeleteUser
             RuleFor(x => x.Login)
                 .Matches("^[a-zA-Z0-9]*$")
                 .WithMessage("Неверный формат логина");
+            
+            RuleFor(x => x.UserLogin)
+                .Matches("^[a-zA-Z0-9]*$")
+                .WithMessage("Неверный формат логина пользователя");
         }
     }
 
-    public class Handler(IUserRepository repository, IMapper mapper, ILogger<Handler> logger) 
+    public class Handler(IUserRepository repository, ILogger<Handler> logger) 
         : IRequestHandler<Command, CommandResult>
     {
         public async Task<CommandResult> Handle(Command request, CancellationToken cancellationToken)

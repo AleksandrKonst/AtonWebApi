@@ -15,7 +15,7 @@ public class ApplicationProfile : Profile
                 opt => opt.MapFrom(x => DateTime.Now))
             .ReverseMap();
         
-        CreateMap<UserDataDto, User>()
+        CreateMap<NewUserDataDto, User>()
             .ForMember(p => p.ModifiedOn,
             opt => opt.MapFrom(x => DateTime.Now))
             .ReverseMap();
